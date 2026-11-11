@@ -1,0 +1,1032 @@
+{
+ "resourceSpans": [
+  {
+   "resource": {
+    "attributes": [
+     {
+      "key": "telemetry.sdk.language",
+      "value": {
+       "stringValue": "python"
+      }
+     },
+     {
+      "key": "telemetry.sdk.name",
+      "value": {
+       "stringValue": "opentelemetry"
+      }
+     },
+     {
+      "key": "telemetry.sdk.version",
+      "value": {
+       "stringValue": "1.45.2"
+      }
+     },
+     {
+      "key": "service.instance.id",
+      "value": {
+       "stringValue": "cacc71e3-f5c3-435e-9369-ff233aa7020d"
+      }
+     },
+     {
+      "key": "service.name",
+      "value": {
+       "stringValue": "probe-pydantic-ai"
+      }
+     }
+    ]
+   },
+   "scopeSpans": [
+    {
+     "scope": {
+      "name": "pydantic-ai",
+      "version": "2.67.0"
+     },
+     "spans": [
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "e08YcLEMQLE=",
+       "parentSpanId": "HKyGUkQY4dw=",
+       "name": "chat mock-large",
+       "kind": "SPAN_KIND_CLIENT",
+       "startTimeUnixNano": "1794366328027438000",
+       "endTimeUnixNano": "1794366328036160000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "chat"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "orchestrator"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4cc0-72a8-9cf1-ae1394ffa3ca"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4cc0-72a8-9cf1-ae14569c5851"
+         }
+        },
+        {
+         "key": "gen_ai.provider.name",
+         "value": {
+          "stringValue": "function"
+         }
+        },
+        {
+         "key": "gen_ai.system",
+         "value": {
+          "stringValue": "function"
+         }
+        },
+        {
+         "key": "gen_ai.request.model",
+         "value": {
+          "stringValue": "mock-large"
+         }
+        },
+        {
+         "key": "model_request_parameters",
+         "value": {
+          "stringValue": "{\"function_tools\":[{\"name\":\"ask_researcher\",\"parameters_json_schema\":{\"additionalProperties\":false,\"properties\":{\"q\":{\"type\":\"string\"}},\"required\":[\"q\"],\"type\":\"object\"},\"description\":null,\"outer_typed_dict_key\":null,\"strict\":null,\"sequential\":false,\"kind\":\"function\",\"metadata\":null,\"timeout\":null,\"defer_loading\":false,\"unless_native\":null,\"with_native\":null,\"tool_kind\":null,\"unless_tool_kind\":null,\"return_schema\":null,\"include_return_schema\":null,\"toolset_id\":\"<agent>\",\"capability_id\":null},{\"name\":\"ask_writer\",\"parameters_json_schema\":{\"additionalProperties\":false,\"properties\":{\"q\":{\"type\":\"string\"}},\"required\":[\"q\"],\"type\":\"object\"},\"description\":null,\"outer_typed_dict_key\":null,\"strict\":null,\"sequential\":false,\"kind\":\"function\",\"metadata\":null,\"timeout\":null,\"defer_loading\":false,\"unless_native\":null,\"with_native\":null,\"tool_kind\":null,\"unless_tool_kind\":null,\"return_schema\":null,\"include_return_schema\":null,\"toolset_id\":\"<agent>\",\"capability_id\":null}],\"native_tools\":[],\"tool_visibility\":{\"ask_researcher\":\"visible\",\"ask_writer\":\"visible\"},\"revealed_tool_names\":[],\"introduced_tool_names\":[],\"deferred_capability_ids\":[],\"output_mode\":\"text\",\"output_object\":null,\"output_tools\":[],\"prompted_output_template\":null,\"allow_text_output\":true,\"allow_image_output\":false,\"instruction_parts\":null,\"instruction_visibility\":null,\"thinking\":null,\"cache\":null}"
+         }
+        },
+        {
+         "key": "gen_ai.tool.definitions",
+         "value": {
+          "stringValue": "[{\"type\":\"function\",\"name\":\"ask_researcher\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"q\":{\"type\":\"string\"}},\"required\":[\"q\"],\"type\":\"object\"}},{\"type\":\"function\",\"name\":\"ask_writer\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"q\":{\"type\":\"string\"}},\"required\":[\"q\"],\"type\":\"object\"}}]"
+         }
+        },
+        {
+         "key": "gen_ai.input.messages",
+         "value": {
+          "stringValue": "[{\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"content\":\"plan it\"}]}]"
+         }
+        },
+        {
+         "key": "gen_ai.output.messages",
+         "value": {
+          "stringValue": "[{\"role\":\"assistant\",\"parts\":[{\"type\":\"tool_call\",\"id\":\"pyd_ai_c1f33a20562a450eb7b2355eea1f1bec\",\"name\":\"ask_researcher\",\"arguments\":{\"q\":\"otel\"}},{\"type\":\"tool_call\",\"id\":\"pyd_ai_9344ac22dfec420d9665b75879e6a4bc\",\"name\":\"ask_writer\",\"arguments\":{\"q\":\"draft\"}}]}]"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"gen_ai.input.messages\":{\"type\":\"array\"},\"gen_ai.output.messages\":{\"type\":\"array\"},\"model_request_parameters\":{\"type\":\"object\"}}}"
+         }
+        },
+        {
+         "key": "gen_ai.usage.input_tokens",
+         "value": {
+          "intValue": "52"
+         }
+        },
+        {
+         "key": "gen_ai.usage.output_tokens",
+         "value": {
+          "intValue": "10"
+         }
+        },
+        {
+         "key": "gen_ai.response.model",
+         "value": {
+          "stringValue": "mock-large"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      },
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "TQV6migqZjs=",
+       "parentSpanId": "hws+466BC0A=",
+       "name": "chat mock-small",
+       "kind": "SPAN_KIND_CLIENT",
+       "startTimeUnixNano": "1794366328039831000",
+       "endTimeUnixNano": "1794366328040425000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "chat"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "researcher"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4ce5-7250-85d8-d07b252ca5e1"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4ce5-7250-85d8-d07c424c1818"
+         }
+        },
+        {
+         "key": "gen_ai.provider.name",
+         "value": {
+          "stringValue": "function"
+         }
+        },
+        {
+         "key": "gen_ai.system",
+         "value": {
+          "stringValue": "function"
+         }
+        },
+        {
+         "key": "gen_ai.request.model",
+         "value": {
+          "stringValue": "mock-small"
+         }
+        },
+        {
+         "key": "model_request_parameters",
+         "value": {
+          "stringValue": "{\"function_tools\":[{\"name\":\"search\",\"parameters_json_schema\":{\"additionalProperties\":false,\"properties\":{\"term\":{\"type\":\"string\"}},\"required\":[\"term\"],\"type\":\"object\"},\"description\":null,\"outer_typed_dict_key\":null,\"strict\":null,\"sequential\":false,\"kind\":\"function\",\"metadata\":null,\"timeout\":null,\"defer_loading\":false,\"unless_native\":null,\"with_native\":null,\"tool_kind\":null,\"unless_tool_kind\":null,\"return_schema\":null,\"include_return_schema\":null,\"toolset_id\":\"<agent>\",\"capability_id\":null}],\"native_tools\":[],\"tool_visibility\":{\"search\":\"visible\"},\"revealed_tool_names\":[],\"introduced_tool_names\":[],\"deferred_capability_ids\":[],\"output_mode\":\"text\",\"output_object\":null,\"output_tools\":[],\"prompted_output_template\":null,\"allow_text_output\":true,\"allow_image_output\":false,\"instruction_parts\":null,\"instruction_visibility\":null,\"thinking\":null,\"cache\":null}"
+         }
+        },
+        {
+         "key": "gen_ai.tool.definitions",
+         "value": {
+          "stringValue": "[{\"type\":\"function\",\"name\":\"search\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"term\":{\"type\":\"string\"}},\"required\":[\"term\"],\"type\":\"object\"}}]"
+         }
+        },
+        {
+         "key": "gen_ai.input.messages",
+         "value": {
+          "stringValue": "[{\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"content\":\"otel\"}]}]"
+         }
+        },
+        {
+         "key": "gen_ai.output.messages",
+         "value": {
+          "stringValue": "[{\"role\":\"assistant\",\"parts\":[{\"type\":\"tool_call\",\"id\":\"pyd_ai_01302a981a8b4c0ca61f0834a1e10e78\",\"name\":\"search\",\"arguments\":{\"term\":\"genai\"}}]}]"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"gen_ai.input.messages\":{\"type\":\"array\"},\"gen_ai.output.messages\":{\"type\":\"array\"},\"model_request_parameters\":{\"type\":\"object\"}}}"
+         }
+        },
+        {
+         "key": "gen_ai.usage.input_tokens",
+         "value": {
+          "intValue": "51"
+         }
+        },
+        {
+         "key": "gen_ai.usage.output_tokens",
+         "value": {
+          "intValue": "5"
+         }
+        },
+        {
+         "key": "gen_ai.response.model",
+         "value": {
+          "stringValue": "mock-small"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      },
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "p6uOQGtYQac=",
+       "parentSpanId": "KMLieX8BBZ4=",
+       "name": "chat mock-small",
+       "kind": "SPAN_KIND_CLIENT",
+       "startTimeUnixNano": "1794366328062952000",
+       "endTimeUnixNano": "1794366328063651000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "chat"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "writer"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4cfb-7748-b9b6-2d89b8f979a8"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4cfb-7748-b9b6-2d8a69392a08"
+         }
+        },
+        {
+         "key": "gen_ai.provider.name",
+         "value": {
+          "stringValue": "function"
+         }
+        },
+        {
+         "key": "gen_ai.system",
+         "value": {
+          "stringValue": "function"
+         }
+        },
+        {
+         "key": "gen_ai.request.model",
+         "value": {
+          "stringValue": "mock-small"
+         }
+        },
+        {
+         "key": "model_request_parameters",
+         "value": {
+          "stringValue": "{\"function_tools\":[],\"native_tools\":[],\"tool_visibility\":{},\"revealed_tool_names\":[],\"introduced_tool_names\":[],\"deferred_capability_ids\":[],\"output_mode\":\"text\",\"output_object\":null,\"output_tools\":[],\"prompted_output_template\":null,\"allow_text_output\":true,\"allow_image_output\":false,\"instruction_parts\":null,\"instruction_visibility\":null,\"thinking\":null,\"cache\":null}"
+         }
+        },
+        {
+         "key": "gen_ai.input.messages",
+         "value": {
+          "stringValue": "[{\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"content\":\"draft\"}]}]"
+         }
+        },
+        {
+         "key": "gen_ai.output.messages",
+         "value": {
+          "stringValue": "[{\"role\":\"assistant\",\"parts\":[{\"type\":\"text\",\"content\":\"written\"}]}]"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"gen_ai.input.messages\":{\"type\":\"array\"},\"gen_ai.output.messages\":{\"type\":\"array\"},\"model_request_parameters\":{\"type\":\"object\"}}}"
+         }
+        },
+        {
+         "key": "gen_ai.usage.input_tokens",
+         "value": {
+          "intValue": "51"
+         }
+        },
+        {
+         "key": "gen_ai.usage.output_tokens",
+         "value": {
+          "intValue": "1"
+         }
+        },
+        {
+         "key": "gen_ai.response.model",
+         "value": {
+          "stringValue": "mock-small"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      },
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "KMLieX8BBZ4=",
+       "parentSpanId": "NHSiCO2GEvc=",
+       "name": "agent run",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366328062113000",
+       "endTimeUnixNano": "1794366328064366000",
+       "attributes": [
+        {
+         "key": "model_name",
+         "value": {
+          "stringValue": "mock-small"
+         }
+        },
+        {
+         "key": "agent_name",
+         "value": {
+          "stringValue": "writer"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "writer"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4cfb-7748-b9b6-2d89b8f979a8"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4cfb-7748-b9b6-2d8a69392a08"
+         }
+        },
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "invoke_agent"
+         }
+        },
+        {
+         "key": "logfire.msg",
+         "value": {
+          "stringValue": "writer run"
+         }
+        },
+        {
+         "key": "final_result",
+         "value": {
+          "stringValue": "written"
+         }
+        },
+        {
+         "key": "gen_ai.aggregated_usage.input_tokens",
+         "value": {
+          "intValue": "51"
+         }
+        },
+        {
+         "key": "gen_ai.aggregated_usage.output_tokens",
+         "value": {
+          "intValue": "1"
+         }
+        },
+        {
+         "key": "pydantic_ai.all_messages",
+         "value": {
+          "stringValue": "[{\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"content\":\"draft\"}]},{\"role\":\"assistant\",\"parts\":[{\"type\":\"text\",\"content\":\"written\"}]}]"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"pydantic_ai.all_messages\":{\"type\":\"array\"},\"final_result\":{\"type\":\"object\"}}}"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      },
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "NHSiCO2GEvc=",
+       "parentSpanId": "HKyGUkQY4dw=",
+       "name": "running tool",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366328038254000",
+       "endTimeUnixNano": "1794366328064580000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "execute_tool"
+         }
+        },
+        {
+         "key": "gen_ai.tool.name",
+         "value": {
+          "stringValue": "ask_writer"
+         }
+        },
+        {
+         "key": "gen_ai.tool.call.id",
+         "value": {
+          "stringValue": "pyd_ai_9344ac22dfec420d9665b75879e6a4bc"
+         }
+        },
+        {
+         "key": "tool_arguments",
+         "value": {
+          "stringValue": "{\"q\":\"draft\"}"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "orchestrator"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4cc0-72a8-9cf1-ae1394ffa3ca"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4cc0-72a8-9cf1-ae14569c5851"
+         }
+        },
+        {
+         "key": "logfire.msg",
+         "value": {
+          "stringValue": "running tool: ask_writer"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"tool_arguments\":{\"type\":\"object\"},\"tool_response\":{\"type\":\"object\"},\"gen_ai.tool.name\":{},\"gen_ai.tool.call.id\":{}}}"
+         }
+        },
+        {
+         "key": "tool_response",
+         "value": {
+          "stringValue": "written"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      },
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "Kbrwltri58E=",
+       "parentSpanId": "hws+466BC0A=",
+       "name": "running tool",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366328040866000",
+       "endTimeUnixNano": "1794366328092054000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "execute_tool"
+         }
+        },
+        {
+         "key": "gen_ai.tool.name",
+         "value": {
+          "stringValue": "search"
+         }
+        },
+        {
+         "key": "gen_ai.tool.call.id",
+         "value": {
+          "stringValue": "pyd_ai_01302a981a8b4c0ca61f0834a1e10e78"
+         }
+        },
+        {
+         "key": "tool_arguments",
+         "value": {
+          "stringValue": "{\"term\":\"genai\"}"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "researcher"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4ce5-7250-85d8-d07b252ca5e1"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4ce5-7250-85d8-d07c424c1818"
+         }
+        },
+        {
+         "key": "logfire.msg",
+         "value": {
+          "stringValue": "running tool: search"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"tool_arguments\":{\"type\":\"object\"},\"tool_response\":{\"type\":\"object\"},\"gen_ai.tool.name\":{},\"gen_ai.tool.call.id\":{}}}"
+         }
+        },
+        {
+         "key": "tool_response",
+         "value": {
+          "stringValue": "result for genai"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      },
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "ChUE9o01zcA=",
+       "parentSpanId": "hws+466BC0A=",
+       "name": "chat mock-small",
+       "kind": "SPAN_KIND_CLIENT",
+       "startTimeUnixNano": "1794366328092810000",
+       "endTimeUnixNano": "1794366328093464000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "chat"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "researcher"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4ce5-7250-85d8-d07b252ca5e1"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4ce5-7250-85d8-d07c424c1818"
+         }
+        },
+        {
+         "key": "gen_ai.provider.name",
+         "value": {
+          "stringValue": "function"
+         }
+        },
+        {
+         "key": "gen_ai.system",
+         "value": {
+          "stringValue": "function"
+         }
+        },
+        {
+         "key": "gen_ai.request.model",
+         "value": {
+          "stringValue": "mock-small"
+         }
+        },
+        {
+         "key": "model_request_parameters",
+         "value": {
+          "stringValue": "{\"function_tools\":[{\"name\":\"search\",\"parameters_json_schema\":{\"additionalProperties\":false,\"properties\":{\"term\":{\"type\":\"string\"}},\"required\":[\"term\"],\"type\":\"object\"},\"description\":null,\"outer_typed_dict_key\":null,\"strict\":null,\"sequential\":false,\"kind\":\"function\",\"metadata\":null,\"timeout\":null,\"defer_loading\":false,\"unless_native\":null,\"with_native\":null,\"tool_kind\":null,\"unless_tool_kind\":null,\"return_schema\":null,\"include_return_schema\":null,\"toolset_id\":\"<agent>\",\"capability_id\":null}],\"native_tools\":[],\"tool_visibility\":{\"search\":\"visible\"},\"revealed_tool_names\":[],\"introduced_tool_names\":[],\"deferred_capability_ids\":[],\"output_mode\":\"text\",\"output_object\":null,\"output_tools\":[],\"prompted_output_template\":null,\"allow_text_output\":true,\"allow_image_output\":false,\"instruction_parts\":null,\"instruction_visibility\":null,\"thinking\":null,\"cache\":null}"
+         }
+        },
+        {
+         "key": "gen_ai.tool.definitions",
+         "value": {
+          "stringValue": "[{\"type\":\"function\",\"name\":\"search\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"term\":{\"type\":\"string\"}},\"required\":[\"term\"],\"type\":\"object\"}}]"
+         }
+        },
+        {
+         "key": "gen_ai.input.messages",
+         "value": {
+          "stringValue": "[{\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"content\":\"otel\"}]},{\"role\":\"assistant\",\"parts\":[{\"type\":\"tool_call\",\"id\":\"pyd_ai_01302a981a8b4c0ca61f0834a1e10e78\",\"name\":\"search\",\"arguments\":{\"term\":\"genai\"}}]},{\"role\":\"user\",\"parts\":[{\"type\":\"tool_call_response\",\"id\":\"pyd_ai_01302a981a8b4c0ca61f0834a1e10e78\",\"name\":\"search\",\"result\":\"result for genai\"}]}]"
+         }
+        },
+        {
+         "key": "gen_ai.output.messages",
+         "value": {
+          "stringValue": "[{\"role\":\"assistant\",\"parts\":[{\"type\":\"text\",\"content\":\"found\"}]}]"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"gen_ai.input.messages\":{\"type\":\"array\"},\"gen_ai.output.messages\":{\"type\":\"array\"},\"model_request_parameters\":{\"type\":\"object\"}}}"
+         }
+        },
+        {
+         "key": "gen_ai.usage.input_tokens",
+         "value": {
+          "intValue": "54"
+         }
+        },
+        {
+         "key": "gen_ai.usage.output_tokens",
+         "value": {
+          "intValue": "6"
+         }
+        },
+        {
+         "key": "gen_ai.response.model",
+         "value": {
+          "stringValue": "mock-small"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      },
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "hws+466BC0A=",
+       "parentSpanId": "De+4QvRZ1gI=",
+       "name": "agent run",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366328038910000",
+       "endTimeUnixNano": "1794366328093998000",
+       "attributes": [
+        {
+         "key": "model_name",
+         "value": {
+          "stringValue": "mock-small"
+         }
+        },
+        {
+         "key": "agent_name",
+         "value": {
+          "stringValue": "researcher"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "researcher"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4ce5-7250-85d8-d07b252ca5e1"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4ce5-7250-85d8-d07c424c1818"
+         }
+        },
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "invoke_agent"
+         }
+        },
+        {
+         "key": "logfire.msg",
+         "value": {
+          "stringValue": "researcher run"
+         }
+        },
+        {
+         "key": "final_result",
+         "value": {
+          "stringValue": "found"
+         }
+        },
+        {
+         "key": "gen_ai.aggregated_usage.input_tokens",
+         "value": {
+          "intValue": "105"
+         }
+        },
+        {
+         "key": "gen_ai.aggregated_usage.output_tokens",
+         "value": {
+          "intValue": "11"
+         }
+        },
+        {
+         "key": "pydantic_ai.all_messages",
+         "value": {
+          "stringValue": "[{\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"content\":\"otel\"}]},{\"role\":\"assistant\",\"parts\":[{\"type\":\"tool_call\",\"id\":\"pyd_ai_01302a981a8b4c0ca61f0834a1e10e78\",\"name\":\"search\",\"arguments\":{\"term\":\"genai\"}}]},{\"role\":\"user\",\"parts\":[{\"type\":\"tool_call_response\",\"id\":\"pyd_ai_01302a981a8b4c0ca61f0834a1e10e78\",\"name\":\"search\",\"result\":\"result for genai\"}]},{\"role\":\"assistant\",\"parts\":[{\"type\":\"text\",\"content\":\"found\"}]}]"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"pydantic_ai.all_messages\":{\"type\":\"array\"},\"final_result\":{\"type\":\"object\"}}}"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      },
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "De+4QvRZ1gI=",
+       "parentSpanId": "HKyGUkQY4dw=",
+       "name": "running tool",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366328037716000",
+       "endTimeUnixNano": "1794366328094190000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "execute_tool"
+         }
+        },
+        {
+         "key": "gen_ai.tool.name",
+         "value": {
+          "stringValue": "ask_researcher"
+         }
+        },
+        {
+         "key": "gen_ai.tool.call.id",
+         "value": {
+          "stringValue": "pyd_ai_c1f33a20562a450eb7b2355eea1f1bec"
+         }
+        },
+        {
+         "key": "tool_arguments",
+         "value": {
+          "stringValue": "{\"q\":\"otel\"}"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "orchestrator"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4cc0-72a8-9cf1-ae1394ffa3ca"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4cc0-72a8-9cf1-ae14569c5851"
+         }
+        },
+        {
+         "key": "logfire.msg",
+         "value": {
+          "stringValue": "running tool: ask_researcher"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"tool_arguments\":{\"type\":\"object\"},\"tool_response\":{\"type\":\"object\"},\"gen_ai.tool.name\":{},\"gen_ai.tool.call.id\":{}}}"
+         }
+        },
+        {
+         "key": "tool_response",
+         "value": {
+          "stringValue": "found"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      },
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "yX6pe/StLfc=",
+       "parentSpanId": "HKyGUkQY4dw=",
+       "name": "chat mock-large",
+       "kind": "SPAN_KIND_CLIENT",
+       "startTimeUnixNano": "1794366328094901000",
+       "endTimeUnixNano": "1794366328095629000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "chat"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "orchestrator"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4cc0-72a8-9cf1-ae1394ffa3ca"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4cc0-72a8-9cf1-ae14569c5851"
+         }
+        },
+        {
+         "key": "gen_ai.provider.name",
+         "value": {
+          "stringValue": "function"
+         }
+        },
+        {
+         "key": "gen_ai.system",
+         "value": {
+          "stringValue": "function"
+         }
+        },
+        {
+         "key": "gen_ai.request.model",
+         "value": {
+          "stringValue": "mock-large"
+         }
+        },
+        {
+         "key": "model_request_parameters",
+         "value": {
+          "stringValue": "{\"function_tools\":[{\"name\":\"ask_researcher\",\"parameters_json_schema\":{\"additionalProperties\":false,\"properties\":{\"q\":{\"type\":\"string\"}},\"required\":[\"q\"],\"type\":\"object\"},\"description\":null,\"outer_typed_dict_key\":null,\"strict\":null,\"sequential\":false,\"kind\":\"function\",\"metadata\":null,\"timeout\":null,\"defer_loading\":false,\"unless_native\":null,\"with_native\":null,\"tool_kind\":null,\"unless_tool_kind\":null,\"return_schema\":null,\"include_return_schema\":null,\"toolset_id\":\"<agent>\",\"capability_id\":null},{\"name\":\"ask_writer\",\"parameters_json_schema\":{\"additionalProperties\":false,\"properties\":{\"q\":{\"type\":\"string\"}},\"required\":[\"q\"],\"type\":\"object\"},\"description\":null,\"outer_typed_dict_key\":null,\"strict\":null,\"sequential\":false,\"kind\":\"function\",\"metadata\":null,\"timeout\":null,\"defer_loading\":false,\"unless_native\":null,\"with_native\":null,\"tool_kind\":null,\"unless_tool_kind\":null,\"return_schema\":null,\"include_return_schema\":null,\"toolset_id\":\"<agent>\",\"capability_id\":null}],\"native_tools\":[],\"tool_visibility\":{\"ask_researcher\":\"visible\",\"ask_writer\":\"visible\"},\"revealed_tool_names\":[],\"introduced_tool_names\":[],\"deferred_capability_ids\":[],\"output_mode\":\"text\",\"output_object\":null,\"output_tools\":[],\"prompted_output_template\":null,\"allow_text_output\":true,\"allow_image_output\":false,\"instruction_parts\":null,\"instruction_visibility\":null,\"thinking\":null,\"cache\":null}"
+         }
+        },
+        {
+         "key": "gen_ai.tool.definitions",
+         "value": {
+          "stringValue": "[{\"type\":\"function\",\"name\":\"ask_researcher\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"q\":{\"type\":\"string\"}},\"required\":[\"q\"],\"type\":\"object\"}},{\"type\":\"function\",\"name\":\"ask_writer\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"q\":{\"type\":\"string\"}},\"required\":[\"q\"],\"type\":\"object\"}}]"
+         }
+        },
+        {
+         "key": "gen_ai.input.messages",
+         "value": {
+          "stringValue": "[{\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"content\":\"plan it\"}]},{\"role\":\"assistant\",\"parts\":[{\"type\":\"tool_call\",\"id\":\"pyd_ai_c1f33a20562a450eb7b2355eea1f1bec\",\"name\":\"ask_researcher\",\"arguments\":{\"q\":\"otel\"}},{\"type\":\"tool_call\",\"id\":\"pyd_ai_9344ac22dfec420d9665b75879e6a4bc\",\"name\":\"ask_writer\",\"arguments\":{\"q\":\"draft\"}}]},{\"role\":\"user\",\"parts\":[{\"type\":\"tool_call_response\",\"id\":\"pyd_ai_c1f33a20562a450eb7b2355eea1f1bec\",\"name\":\"ask_researcher\",\"result\":\"found\"},{\"type\":\"tool_call_response\",\"id\":\"pyd_ai_9344ac22dfec420d9665b75879e6a4bc\",\"name\":\"ask_writer\",\"result\":\"written\"}]}]"
+         }
+        },
+        {
+         "key": "gen_ai.output.messages",
+         "value": {
+          "stringValue": "[{\"role\":\"assistant\",\"parts\":[{\"type\":\"text\",\"content\":\"done\"}]}]"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"gen_ai.input.messages\":{\"type\":\"array\"},\"gen_ai.output.messages\":{\"type\":\"array\"},\"model_request_parameters\":{\"type\":\"object\"}}}"
+         }
+        },
+        {
+         "key": "gen_ai.usage.input_tokens",
+         "value": {
+          "intValue": "54"
+         }
+        },
+        {
+         "key": "gen_ai.usage.output_tokens",
+         "value": {
+          "intValue": "11"
+         }
+        },
+        {
+         "key": "gen_ai.response.model",
+         "value": {
+          "stringValue": "mock-large"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      },
+      {
+       "traceId": "UrgQzA/cJnWK4MJcb47lxg==",
+       "spanId": "HKyGUkQY4dw=",
+       "name": "agent run",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366328026359000",
+       "endTimeUnixNano": "1794366328096177000",
+       "attributes": [
+        {
+         "key": "model_name",
+         "value": {
+          "stringValue": "mock-large"
+         }
+        },
+        {
+         "key": "agent_name",
+         "value": {
+          "stringValue": "orchestrator"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "orchestrator"
+         }
+        },
+        {
+         "key": "gen_ai.agent.call.id",
+         "value": {
+          "stringValue": "01a1c891-4cc0-72a8-9cf1-ae1394ffa3ca"
+         }
+        },
+        {
+         "key": "gen_ai.conversation.id",
+         "value": {
+          "stringValue": "01a1c891-4cc0-72a8-9cf1-ae14569c5851"
+         }
+        },
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "invoke_agent"
+         }
+        },
+        {
+         "key": "logfire.msg",
+         "value": {
+          "stringValue": "orchestrator run"
+         }
+        },
+        {
+         "key": "final_result",
+         "value": {
+          "stringValue": "done"
+         }
+        },
+        {
+         "key": "gen_ai.aggregated_usage.input_tokens",
+         "value": {
+          "intValue": "106"
+         }
+        },
+        {
+         "key": "gen_ai.aggregated_usage.output_tokens",
+         "value": {
+          "intValue": "21"
+         }
+        },
+        {
+         "key": "pydantic_ai.all_messages",
+         "value": {
+          "stringValue": "[{\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"content\":\"plan it\"}]},{\"role\":\"assistant\",\"parts\":[{\"type\":\"tool_call\",\"id\":\"pyd_ai_c1f33a20562a450eb7b2355eea1f1bec\",\"name\":\"ask_researcher\",\"arguments\":{\"q\":\"otel\"}},{\"type\":\"tool_call\",\"id\":\"pyd_ai_9344ac22dfec420d9665b75879e6a4bc\",\"name\":\"ask_writer\",\"arguments\":{\"q\":\"draft\"}}]},{\"role\":\"user\",\"parts\":[{\"type\":\"tool_call_response\",\"id\":\"pyd_ai_c1f33a20562a450eb7b2355eea1f1bec\",\"name\":\"ask_researcher\",\"result\":\"found\"},{\"type\":\"tool_call_response\",\"id\":\"pyd_ai_9344ac22dfec420d9665b75879e6a4bc\",\"name\":\"ask_writer\",\"result\":\"written\"}]},{\"role\":\"assistant\",\"parts\":[{\"type\":\"text\",\"content\":\"done\"}]}]"
+         }
+        },
+        {
+         "key": "logfire.json_schema",
+         "value": {
+          "stringValue": "{\"type\":\"object\",\"properties\":{\"pydantic_ai.all_messages\":{\"type\":\"array\"},\"final_result\":{\"type\":\"object\"}}}"
+         }
+        }
+       ],
+       "status": {},
+       "flags": 256
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

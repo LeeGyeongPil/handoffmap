@@ -1,0 +1,39 @@
+[build-system]
+requires = ["uv_build>=0.13.6,<0.14"]
+build-backend = "uv_build"
+
+[project]
+name = "handoffmap"
+version = "0.1.0"
+description = "Fold an OTLP agent trace (OTel GenAI / OpenInference) into a Mermaid sequence diagram and a per-agent table. No server, no dependencies."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = []
+keywords = ["opentelemetry", "genai", "openinference", "agents", "multi-agent", "mermaid", "observability", "tracing"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Debuggers",
+  "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/LeeGyeongPil/handoffmap"
+Issues = "https://github.com/LeeGyeongPil/handoffmap/issues"
+Changelog = "https://github.com/LeeGyeongPil/handoffmap/blob/main/CHANGELOG.md"
+
+[project.scripts]
+handoffmap = "handoffmap.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

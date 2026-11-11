@@ -1,0 +1,556 @@
+{
+ "resourceSpans": [
+  {
+   "resource": {
+    "attributes": [
+     {
+      "key": "telemetry.sdk.language",
+      "value": {
+       "stringValue": "python"
+      }
+     },
+     {
+      "key": "telemetry.sdk.name",
+      "value": {
+       "stringValue": "opentelemetry"
+      }
+     },
+     {
+      "key": "telemetry.sdk.version",
+      "value": {
+       "stringValue": "1.45.2"
+      }
+     },
+     {
+      "key": "service.instance.id",
+      "value": {
+       "stringValue": "38e00061-1939-4b2b-b0c8-26b9f266421a"
+      }
+     },
+     {
+      "key": "service.name",
+      "value": {
+       "stringValue": "probe-oai-agents"
+      }
+     }
+    ]
+   },
+   "scopeSpans": [
+    {
+     "scope": {
+      "name": "openinference.instrumentation.openai_agents",
+      "version": "2.7.1"
+     },
+     "spans": [
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "AADZudPVZvE=",
+       "parentSpanId": "2O2jUe4sxvI=",
+       "name": "generation",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508579137024",
+       "endTimeUnixNano": "1794366508579834880",
+       "attributes": [
+        {
+         "key": "llm.system",
+         "value": {
+          "stringValue": "openai"
+         }
+        },
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "LLM"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "aZvRrTTfOtk=",
+       "parentSpanId": "2O2jUe4sxvI=",
+       "name": "handoff to billing",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508580360960",
+       "endTimeUnixNano": "1794366508580516096",
+       "attributes": [
+        {
+         "key": "input.value",
+         "value": {
+          "stringValue": "triage"
+         }
+        },
+        {
+         "key": "output.value",
+         "value": {
+          "stringValue": "billing"
+         }
+        },
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "TOOL"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "2O2jUe4sxvI=",
+       "parentSpanId": "x9sUTdSVJFY=",
+       "name": "turn",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508578542080",
+       "endTimeUnixNano": "1794366508580580096",
+       "attributes": [
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "CHAIN"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "x9sUTdSVJFY=",
+       "parentSpanId": "1aef362KKlo=",
+       "name": "triage",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508578473984",
+       "endTimeUnixNano": "1794366508580601856",
+       "attributes": [
+        {
+         "key": "graph.node.id",
+         "value": {
+          "stringValue": "triage"
+         }
+        },
+        {
+         "key": "agent.name",
+         "value": {
+          "stringValue": "triage"
+         }
+        },
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "AGENT"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "+1hHL0Xl/9Q=",
+       "parentSpanId": "zr9NbqPZmjY=",
+       "name": "generation",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508581134080",
+       "endTimeUnixNano": "1794366508581198080",
+       "attributes": [
+        {
+         "key": "llm.system",
+         "value": {
+          "stringValue": "openai"
+         }
+        },
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "LLM"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "MjtTtycoW0k=",
+       "parentSpanId": "zr9NbqPZmjY=",
+       "name": "lookup",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508581676032",
+       "endTimeUnixNano": "1794366508582881024",
+       "attributes": [
+        {
+         "key": "tool.name",
+         "value": {
+          "stringValue": "lookup"
+         }
+        },
+        {
+         "key": "input.value",
+         "value": {
+          "stringValue": "{\"account\":\"A1\"}"
+         }
+        },
+        {
+         "key": "input.mime_type",
+         "value": {
+          "stringValue": "application/json"
+         }
+        },
+        {
+         "key": "output.value",
+         "value": {
+          "stringValue": "account A1: ok"
+         }
+        },
+        {
+         "key": "tool.description",
+         "value": {
+          "stringValue": "Look up an account."
+         }
+        },
+        {
+         "key": "tool.parameters",
+         "value": {
+          "stringValue": "{\"properties\": {\"account\": {\"title\": \"Account\", \"type\": \"string\"}}, \"required\": [\"account\"], \"title\": \"lookup_args\", \"type\": \"object\", \"additionalProperties\": false}"
+         }
+        },
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "TOOL"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "JLd9vEilWWU=",
+       "parentSpanId": "UMGkCOIc5k4=",
+       "name": "generation",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508583127040",
+       "endTimeUnixNano": "1794366508583185920",
+       "attributes": [
+        {
+         "key": "llm.system",
+         "value": {
+          "stringValue": "openai"
+         }
+        },
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "LLM"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "UMGkCOIc5k4=",
+       "parentSpanId": "LbOBxtcTTCY=",
+       "name": "turn",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508582652160",
+       "endTimeUnixNano": "1794366508583520768",
+       "attributes": [
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "CHAIN"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "LbOBxtcTTCY=",
+       "parentSpanId": "PuT7/K5sSsk=",
+       "name": "summarizer",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508582607872",
+       "endTimeUnixNano": "1794366508583611136",
+       "attributes": [
+        {
+         "key": "graph.node.id",
+         "value": {
+          "stringValue": "summarizer"
+         }
+        },
+        {
+         "key": "agent.name",
+         "value": {
+          "stringValue": "summarizer"
+         }
+        },
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "AGENT"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "PuT7/K5sSsk=",
+       "parentSpanId": "ZNYgpuw/TGQ=",
+       "name": "Agent workflow",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508582488064",
+       "endTimeUnixNano": "1794366508583638016",
+       "attributes": [
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "CHAIN"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "ZNYgpuw/TGQ=",
+       "parentSpanId": "zr9NbqPZmjY=",
+       "name": "summarize",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508581864960",
+       "endTimeUnixNano": "1794366508583769088",
+       "attributes": [
+        {
+         "key": "tool.name",
+         "value": {
+          "stringValue": "summarize"
+         }
+        },
+        {
+         "key": "input.value",
+         "value": {
+          "stringValue": "{\"input\":\"long text\"}"
+         }
+        },
+        {
+         "key": "input.mime_type",
+         "value": {
+          "stringValue": "application/json"
+         }
+        },
+        {
+         "key": "output.value",
+         "value": {
+          "stringValue": "short summary"
+         }
+        },
+        {
+         "key": "tool.description",
+         "value": {
+          "stringValue": "summarize text"
+         }
+        },
+        {
+         "key": "tool.parameters",
+         "value": {
+          "stringValue": "{\"description\": \"Default input schema for agent-as-tool calls.\", \"properties\": {\"input\": {\"title\": \"Input\", \"type\": \"string\"}}, \"required\": [\"input\"], \"title\": \"AgentAsToolInput\", \"type\": \"object\", \"additionalProperties\": false}"
+         }
+        },
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "TOOL"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "zr9NbqPZmjY=",
+       "parentSpanId": "NOgEjElfnco=",
+       "name": "turn",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508580687872",
+       "endTimeUnixNano": "1794366508583916032",
+       "attributes": [
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "CHAIN"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "m+Bq8D+ERAI=",
+       "parentSpanId": "tZq/ik+MSQA=",
+       "name": "generation",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508584347904",
+       "endTimeUnixNano": "1794366508584407040",
+       "attributes": [
+        {
+         "key": "llm.system",
+         "value": {
+          "stringValue": "openai"
+         }
+        },
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "LLM"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "tZq/ik+MSQA=",
+       "parentSpanId": "NOgEjElfnco=",
+       "name": "turn",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508583951104",
+       "endTimeUnixNano": "1794366508584954112",
+       "attributes": [
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "CHAIN"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "NOgEjElfnco=",
+       "parentSpanId": "1aef362KKlo=",
+       "name": "billing",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508580638976",
+       "endTimeUnixNano": "1794366508585155072",
+       "attributes": [
+        {
+         "key": "graph.node.id",
+         "value": {
+          "stringValue": "billing"
+         }
+        },
+        {
+         "key": "agent.name",
+         "value": {
+          "stringValue": "billing"
+         }
+        },
+        {
+         "key": "graph.node.parent_id",
+         "value": {
+          "stringValue": "triage"
+         }
+        },
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "AGENT"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "1aef362KKlo=",
+       "parentSpanId": "+/s05UFqLDM=",
+       "name": "Agent workflow",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508577761024",
+       "endTimeUnixNano": "1794366508585192960",
+       "attributes": [
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "CHAIN"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      },
+      {
+       "traceId": "ycZCUYxyA67pDn+MUvl0rQ==",
+       "spanId": "+/s05UFqLDM=",
+       "name": "Agent workflow",
+       "kind": "SPAN_KIND_INTERNAL",
+       "startTimeUnixNano": "1794366508577702000",
+       "endTimeUnixNano": "1794366508585214000",
+       "attributes": [
+        {
+         "key": "openinference.span.kind",
+         "value": {
+          "stringValue": "AGENT"
+         }
+        }
+       ],
+       "status": {
+        "code": "STATUS_CODE_OK"
+       },
+       "flags": 256
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
