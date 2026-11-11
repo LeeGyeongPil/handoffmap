@@ -1,5 +1,7 @@
 # handoffmap
 
+**한국어** | [English](README.en.md)
+
 > **English summary** — handoffmap folds an OpenTelemetry trace of a multi-agent run (OTel GenAI semantic conventions or OpenInference) into a Mermaid sequence diagram plus a per-agent table: who handed off to whom, who called whom as a tool, what ran in parallel, and how many tokens each agent used. It reads an OTLP JSON/JSONL file, needs no server and has zero runtime dependencies. Try it: `uv tool install git+https://github.com/LeeGyeongPil/handoffmap && handoffmap --sample pydantic-ai`.
 
 에이전트 추적(span 트리) 수십 줄을 눈으로 접는 대신, 파일 하나로 **누가 누구에게 넘겼고, 누가 누구를 도구처럼 불렀고, 어디서 병렬로 돌았는지**를 Mermaid 순서도와 표로 뽑아 주는 CLI입니다. PR·이슈·README에 붙이면 GitHub이 그림으로 그려 줍니다.
