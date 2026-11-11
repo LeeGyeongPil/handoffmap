@@ -1,0 +1,272 @@
+{
+ "resourceSpans": [
+  {
+   "resource": {
+    "attributes": [
+     {
+      "key": "service.name",
+      "value": {
+       "stringValue": "synthetic"
+      }
+     }
+    ]
+   },
+   "scopeSpans": [
+    {
+     "scope": {
+      "name": "handmade"
+     },
+     "spans": [
+      {
+       "traceId": "b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+       "spanId": "0000000000000001",
+       "name": "invoke_agent planner",
+       "kind": 1,
+       "startTimeUnixNano": "1800000000000000000",
+       "endTimeUnixNano": "1800000000200000000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "invoke_agent"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "planner"
+         }
+        }
+       ]
+      },
+      {
+       "traceId": "b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+       "spanId": "0000000000000010",
+       "name": "execute_tool delegate_to_coder",
+       "kind": 1,
+       "startTimeUnixNano": "1800000000010000000",
+       "endTimeUnixNano": "1800000000060000000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "execute_tool"
+         }
+        },
+        {
+         "key": "gen_ai.tool.name",
+         "value": {
+          "stringValue": "delegate_to_coder"
+         }
+        }
+       ],
+       "parentSpanId": "0000000000000001"
+      },
+      {
+       "traceId": "b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+       "spanId": "0000000000000011",
+       "name": "invoke_agent coder",
+       "kind": 1,
+       "startTimeUnixNano": "1800000000011000000",
+       "endTimeUnixNano": "1800000000059000000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "invoke_agent"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "coder"
+         }
+        }
+       ],
+       "parentSpanId": "0000000000000010"
+      },
+      {
+       "traceId": "b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+       "spanId": "0000000000000012",
+       "name": "chat demo-model",
+       "kind": 3,
+       "startTimeUnixNano": "1800000000012000000",
+       "endTimeUnixNano": "1800000000030000000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "chat"
+         }
+        },
+        {
+         "key": "gen_ai.usage.input_tokens",
+         "value": {
+          "intValue": "30"
+         }
+        },
+        {
+         "key": "gen_ai.usage.output_tokens",
+         "value": {
+          "intValue": "10"
+         }
+        }
+       ],
+       "parentSpanId": "0000000000000011"
+      },
+      {
+       "traceId": "b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+       "spanId": "0000000000000014",
+       "name": "execute_tool delegate_to_coder",
+       "kind": 1,
+       "startTimeUnixNano": "1800000000070000000",
+       "endTimeUnixNano": "1800000000120000000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "execute_tool"
+         }
+        },
+        {
+         "key": "gen_ai.tool.name",
+         "value": {
+          "stringValue": "delegate_to_coder"
+         }
+        }
+       ],
+       "parentSpanId": "0000000000000001"
+      },
+      {
+       "traceId": "b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+       "spanId": "0000000000000015",
+       "name": "invoke_agent coder",
+       "kind": 1,
+       "startTimeUnixNano": "1800000000071000000",
+       "endTimeUnixNano": "1800000000119000000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "invoke_agent"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "coder"
+         }
+        }
+       ],
+       "parentSpanId": "0000000000000014"
+      },
+      {
+       "traceId": "b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+       "spanId": "0000000000000016",
+       "name": "chat demo-model",
+       "kind": 3,
+       "startTimeUnixNano": "1800000000072000000",
+       "endTimeUnixNano": "1800000000090000000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "chat"
+         }
+        },
+        {
+         "key": "gen_ai.usage.input_tokens",
+         "value": {
+          "intValue": "30"
+         }
+        },
+        {
+         "key": "gen_ai.usage.output_tokens",
+         "value": {
+          "intValue": "10"
+         }
+        }
+       ],
+       "parentSpanId": "0000000000000015"
+      },
+      {
+       "traceId": "b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+       "spanId": "0000000000000018",
+       "name": "execute_tool delegate_to_coder",
+       "kind": 1,
+       "startTimeUnixNano": "1800000000130000000",
+       "endTimeUnixNano": "1800000000180000000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "execute_tool"
+         }
+        },
+        {
+         "key": "gen_ai.tool.name",
+         "value": {
+          "stringValue": "delegate_to_coder"
+         }
+        }
+       ],
+       "parentSpanId": "0000000000000001"
+      },
+      {
+       "traceId": "b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+       "spanId": "0000000000000019",
+       "name": "invoke_agent coder",
+       "kind": 1,
+       "startTimeUnixNano": "1800000000131000000",
+       "endTimeUnixNano": "1800000000179000000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "invoke_agent"
+         }
+        },
+        {
+         "key": "gen_ai.agent.name",
+         "value": {
+          "stringValue": "coder"
+         }
+        }
+       ],
+       "parentSpanId": "0000000000000018"
+      },
+      {
+       "traceId": "b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+       "spanId": "000000000000001a",
+       "name": "chat demo-model",
+       "kind": 3,
+       "startTimeUnixNano": "1800000000132000000",
+       "endTimeUnixNano": "1800000000150000000",
+       "attributes": [
+        {
+         "key": "gen_ai.operation.name",
+         "value": {
+          "stringValue": "chat"
+         }
+        },
+        {
+         "key": "gen_ai.usage.input_tokens",
+         "value": {
+          "intValue": "30"
+         }
+        },
+        {
+         "key": "gen_ai.usage.output_tokens",
+         "value": {
+          "intValue": "10"
+         }
+        }
+       ],
+       "parentSpanId": "0000000000000019"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
