@@ -4,8 +4,8 @@
 
 에이전트 추적(span 트리) 수십 줄을 눈으로 접는 대신, 파일 하나로 **누가 누구에게 넘겼고, 누가 누구를 도구처럼 불렀고, 어디서 병렬로 돌았는지**를 Mermaid 순서도와 표로 뽑아 주는 CLI입니다. PR·이슈·README에 붙이면 GitHub이 그림으로 그려 줍니다.
 
-![handoffmap 대표 화면: 병렬 도구 호출이 par 블록으로 보이는 순서도](docs/images/01-hero.png)
-*Pydantic AI로 만든 샘플 추적. orchestrator가 researcher와 writer를 도구로 동시에 불렀다는 것이 `par` 블록 하나로 보입니다.*
+![handoffmap 대표 화면: Mermaid 출력 원문](docs/images/01-hero.png)
+*Pydantic AI로 만든 샘플 추적의 Mermaid 출력(원문; GitHub에서는 순서도로 그려집니다). orchestrator가 researcher와 writer를 도구로 동시에 불렀다는 것이 `par` 블록 하나로 보입니다.*
 
 ## handoffmap 이란
 
