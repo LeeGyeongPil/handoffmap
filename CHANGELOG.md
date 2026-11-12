@@ -5,6 +5,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-12
+
+### Added
+- English and Korean output. Pick the language with `--lang en|ko`, the `HANDOFFMAP_LANG` environment variable, or the system locale (`LC_ALL`, `LC_MESSAGES`, `LANG`, in that order); anything that is not Korean is English.
+- Help text, argparse errors, runtime errors, the Markdown report, the table headers, `--explain` and warning sentences are localized.
+- `lang` keyword argument for `render_markdown`, `render_table` and `render_explain` (default `"en"`, never read from the environment).
+
+### Unchanged
+- `--format json` and `--format mermaid` output is byte-identical in both languages; warning `message` fields in JSON stay English.
+
 ## [0.1.0] - 2026-11-11
 
 ### Added

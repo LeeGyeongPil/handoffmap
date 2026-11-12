@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "handoffmap"
-version = "0.1.0"
+version = "0.2.0"
 description = "Fold an OTLP agent trace (OTel GenAI / OpenInference) into a Mermaid sequence diagram and a per-agent table. No server, no dependencies."
 readme = "README.md"
 license = "MIT"
