@@ -128,11 +128,7 @@ def analyze(trace: Trace, *, repeat_threshold: int = 3, max_parallel: int = 8) -
         if c.role == "agent"
     }
     if not runs:
-        raise NoAgentSpansError(
-            f"no agent spans found in trace {trace.trace_id} ({len(trace.spans)} spans). "
-            "Expected spans with gen_ai.operation.name=invoke_agent (OTel GenAI) or "
-            "openinference.span.kind=AGENT with an agent.name (OpenInference)."
-        )
+        raise NoAgentSpansError("err.no_agent_spans", trace_id=trace.trace_id, count=len(trace.spans))
     ctx = _Context(spans, info, runs)
 
     edges: list[Edge] = []

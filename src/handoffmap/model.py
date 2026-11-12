@@ -120,7 +120,8 @@ class AgentStats:
 @dataclass
 class FlowWarning:
     code: str
-    message: str
+    message: str  # English; the JSON output keeps it as is
+    args: dict[str, Any] = field(default_factory=dict)  # values for the localized message ``warn.<code>``
 
 
 @dataclass

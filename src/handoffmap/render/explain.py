@@ -4,47 +4,39 @@ from __future__ import annotations
 
 from collections import Counter
 
+from ..i18n import t
 from ..model import Edge, Flow
 
-_WHY = {
-    "root": "no agent above it and no handoff source: it started the run",
-    "call": "agent span nested inside the caller, no tool span in between",
-    "as_tool": "a tool span sits between the caller and this agent (agent used as a tool)",
-    "handoff": "no agent ancestor; the span is a sibling and names its predecessor (graph.node.parent_id)",
-}
+
+def _edge_line(e: Edge, lang: str) -> str:
+    src = e.caller or t(lang, "ex.none")
+    extra = t(lang, "ex.via", via=e.via) if e.via else ""
+    return f"  {src} -> {e.callee}: {e.kind}{extra}  [{t(lang, 'why.' + e.kind)}]"
 
 
-def _edge_line(e: Edge) -> str:
-    src = e.caller or "(none)"
-    extra = f" via {e.via}" if e.via else ""
-    return f"  {src} -> {e.callee}: {e.kind}{extra}  [{_WHY[e.kind]}]"
-
-
-def render_explain(flow: Flow) -> str:
+def render_explain(flow: Flow, lang: str = "en") -> str:
+    """Describe the detection result; ``lang`` is ``en`` (default) or ``ko``."""
     lines = [
-        f"trace: {flow.trace_id}",
-        f"convention: {flow.convention}",
-        f"size: {flow.span_count} spans, {len(flow.runs)} agent runs, {len(flow.agents)} agents",
-        "agents: " + ", ".join(a.name for a in flow.agents),
-        "edges:",
+        t(lang, "ex.trace", trace=flow.trace_id),
+        t(lang, "ex.convention", convention=flow.convention),
+        t(lang, "ex.size", spans=flow.span_count, runs=len(flow.runs), agents=len(flow.agents)),
+        t(lang, "ex.agents", names=", ".join(a.name for a in flow.agents)),
+        t(lang, "ex.edges"),
     ]
-    lines += [_edge_line(e) for e in flow.edges]
+    lines += [_edge_line(e, lang) for e in flow.edges]
     if flow.ignored:
         counts = Counter(flow.ignored)
         shown = ", ".join(f"'{name}' x{n}" for name, n in counts.items())
-        lines.append(f"ignored wrappers (AGENT span without agent.name, not counted as agents): {shown}")
+        lines.append(t(lang, "ex.ignored", shown=shown))
     else:
-        lines.append("ignored wrappers: none")
+        lines.append(t(lang, "ex.ignored_none"))
     if flow.unknown_operations:
-        lines.append("unknown gen_ai.operation.name values (passed through): " + ", ".join(flow.unknown_operations))
-    t = flow.totals
-    if t.input_tokens is None and t.output_tokens is None:
-        lines.append("tokens: none of the LLM spans carry token counts")
+        lines.append(t(lang, "ex.unknown_ops", names=", ".join(flow.unknown_operations)))
+    tot = flow.totals
+    if tot.input_tokens is None and tot.output_tokens is None:
+        lines.append(t(lang, "ex.tokens_none"))
     else:
-        lines.append(f"tokens: {t.input_tokens or 0} in / {t.output_tokens or 0} out (summed from LLM spans only)")
+        lines.append(t(lang, "ex.tokens", input=tot.input_tokens or 0, output=tot.output_tokens or 0))
     if flow.reported_usage is not None:
-        lines.append(
-            f"agent spans report {flow.reported_usage[0]} in / {flow.reported_usage[1]} out "
-            "(cross-check only, never added to the totals)"
-        )
+        lines.append(t(lang, "ex.reported", input=flow.reported_usage[0], output=flow.reported_usage[1]))
     return "\n".join(lines) + "\n"

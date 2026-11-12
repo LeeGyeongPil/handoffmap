@@ -38,14 +38,14 @@ def normalize_id(raw: Any) -> str | None:
     if raw is None or raw == "":
         return None
     if not isinstance(raw, str):
-        raise NotOtlpError(f"not an OTLP trace: span/trace id must be a string, got {type(raw).__name__}")
+        raise NotOtlpError("err.id_type", type=type(raw).__name__)
     if _HEX_ID.match(raw):
         hex_id = raw.lower()
     else:
         try:
             hex_id = base64.b64decode(raw, validate=True).hex()
         except (binascii.Error, ValueError) as exc:
-            raise NotOtlpError(f"not an OTLP trace: id {raw!r} is neither hex nor base64") from exc
+            raise NotOtlpError("err.id_encoding", raw=raw) from exc
     if set(hex_id) == {"0"}:
         return None
     return hex_id
@@ -103,7 +103,7 @@ def _int(raw: Any) -> int:
 
 def _spans_of_request(request: Any) -> list[Span]:
     if not isinstance(request, dict) or not isinstance(request.get("resourceSpans"), list):
-        raise NotOtlpError("not an OTLP trace: expected a JSON object with a 'resourceSpans' list")
+        raise NotOtlpError("err.no_resource_spans")
     spans: list[Span] = []
     for resource_spans in request["resourceSpans"]:
         # older exporters use instrumentationLibrarySpans instead of scopeSpans
@@ -114,7 +114,7 @@ def _spans_of_request(request: Any) -> list[Span]:
                 trace_id = normalize_id(raw.get("traceId"))
                 span_id = normalize_id(raw.get("spanId"))
                 if trace_id is None or span_id is None:
-                    raise NotOtlpError("not an OTLP trace: a span has no traceId/spanId")
+                    raise NotOtlpError("err.span_no_ids")
                 spans.append(
                     Span(
                         trace_id=trace_id,
@@ -141,16 +141,16 @@ def parse(text: str) -> list[Trace]:
         try:
             requests = [json.loads(ln) for ln in lines]
         except json.JSONDecodeError:
-            raise NotOtlpError(f"not an OTLP trace: invalid JSON ({whole_error.msg}, line {whole_error.lineno})") from None
+            raise NotOtlpError("err.invalid_json", msg=whole_error.msg, line=whole_error.lineno) from None
         if not requests:
-            raise NotOtlpError("not an OTLP trace: the input is empty") from None
+            raise NotOtlpError("err.empty") from None
 
     traces: dict[str, Trace] = {}
     for request in requests:
         for span in _spans_of_request(request):
             traces.setdefault(span.trace_id, Trace(span.trace_id)).spans.append(span)
     if not traces:
-        raise NotOtlpError("not an OTLP trace: no spans found")
+        raise NotOtlpError("err.no_spans")
     return list(traces.values())
 
 
@@ -160,7 +160,7 @@ def load(path: str | Path) -> list[Trace]:
     try:
         text = p.read_text(encoding="utf-8")
     except FileNotFoundError:
-        raise NotOtlpError(f"file not found: {p}") from None
+        raise NotOtlpError("err.file_not_found", path=p) from None
     except (OSError, UnicodeDecodeError) as exc:
-        raise NotOtlpError(f"cannot read {p}: {exc}") from None
+        raise NotOtlpError("err.cannot_read", path=p, error=exc) from None
     return parse(text)
