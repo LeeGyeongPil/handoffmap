@@ -6,7 +6,7 @@ import pytest
 
 import handoffmap
 
-from conftest import FIXTURES, edge_keys, flow_of, sample_path
+from helpers import FIXTURES, edge_keys, flow_of, sample_path
 
 PYDANTIC_EDGES = [
     (None, "orchestrator", "root"),

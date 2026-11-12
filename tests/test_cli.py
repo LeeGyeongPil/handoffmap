@@ -11,7 +11,7 @@ import pytest
 import handoffmap
 from handoffmap.cli import FORMATS, SAMPLES, main
 
-from conftest import FIXTURES, sample_path
+from helpers import FIXTURES, sample_path
 
 
 def test_default_markdown_report(capsys):

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from handoffmap.render.table import render_table
 
-from conftest import flow_of, sample_path
+from helpers import flow_of, sample_path
 
 
 def test_tokens_summed_only_at_llm_spans():

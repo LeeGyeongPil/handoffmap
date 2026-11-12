@@ -9,7 +9,7 @@ import pytest
 import handoffmap
 from handoffmap.render.mermaid import escape
 
-from conftest import FIXTURES, flow_of, sample_path
+from helpers import FIXTURES, flow_of, sample_path
 
 ENTITY = re.compile(r"#\d+;")
 

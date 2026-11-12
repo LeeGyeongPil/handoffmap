@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from conftest import FIXTURES, flow_of, sample_path
+from helpers import FIXTURES, flow_of, sample_path
 
 
 def test_repeated_delegation_warning():

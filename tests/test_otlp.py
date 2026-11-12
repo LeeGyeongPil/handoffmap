@@ -10,7 +10,7 @@ import handoffmap
 from handoffmap.errors import NotOtlpError
 from handoffmap.otlp import normalize_id, parse
 
-from conftest import FIXTURES, sample_path
+from helpers import FIXTURES, sample_path
 
 
 def _shape(trace):
