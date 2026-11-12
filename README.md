@@ -28,11 +28,10 @@ It suits you if:
 Until it is published to PyPI, install from GitHub.
 
 ```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh      # uv 가 없다면 (macOS는 brew install uv)
+curl -LsSf https://astral.sh/uv/install.sh | sh      # if you do not have uv (macOS: brew install uv)
 uv tool install git+https://github.com/LeeGyeongPil/handoffmap
-# PyPI 에 게시된 뒤에는: pipx install handoffmap
+# after it is on PyPI: pipx install handoffmap
 ```
-(Comments: "if you do not have uv (on macOS, brew install uv)" and "after it is published on PyPI: pipx install handoffmap".)
 
 ### Run
 
@@ -171,6 +170,7 @@ handoffmap --sample pydantic-ai --format table
 ```text
 handoffmap [FILE | --sample NAME] [--format md|mermaid|table|json] [--explain]
            [--trace TRACE_ID] [--max-parallel N] [--repeat-threshold N] [--no-tools] [-o OUT]
+           [--lang en|ko]
 ```
 
 | Option | What it does | Example |
@@ -184,15 +184,31 @@ handoffmap [FILE | --sample NAME] [--format md|mermaid|table|json] [--explain]
 | `--repeat-threshold N` | A `repeated-delegation` warning if the same delegation happens N times (default 3) | `--repeat-threshold 2` |
 | `--no-tools` | Hides ordinary tool-call lines | `--no-tools` |
 | `-o`, `--output OUT` | Save to a file | `-o flow.md` |
+| `--lang LANG` | Output language: `en` or `ko`. Applies to help, errors, and the md, table and `--explain` text (see "Output language") | `--lang ko` |
 | `--version` | Show the version | |
 
 Exit codes: `0` normal / `1` no agent spans / `2` input error (not OTLP, or file missing).
 
 ```text
-$ handoffmap not-otlp.json
-handoffmap: not an OTLP trace: expected a JSON object with a 'resourceSpans' list      (종료 코드 2)
+$ handoffmap not-otlp.json --lang en
+handoffmap: not an OTLP trace: expected a JSON object with a 'resourceSpans' list
+$ echo $?
+2
 ```
-(`종료 코드 2` means "exit code 2".)
+
+**Output language**
+
+The help text, error messages, and the `md`, `table` and `--explain` text come in English and Korean. The language is chosen in this order, and the first one set wins: `--lang en|ko` > the `HANDOFFMAP_LANG` environment variable > `LC_ALL` > `LC_MESSAGES` > `LANG`. A value that starts with `ko` (for example `ko_KR.UTF-8`) means Korean; anything else, or nothing set, means English.
+
+```bash
+handoffmap --sample pydantic-ai --lang ko        # one run in Korean
+HANDOFFMAP_LANG=ko handoffmap --help             # help text in Korean
+LANG=fr_FR.UTF-8 handoffmap --help               # not Korean, so English
+```
+
+Machine-readable output does not change with the language: `--format json` and `--format mermaid` are byte-identical for `en` and `ko` (warning `message` fields in the JSON stay English), and so are the exit codes. The Python API (`render_markdown`, `render_table`, `render_explain`) defaults to `lang="en"` and never reads the environment; pass `lang="ko"` to get Korean text.
+
+The screenshots of the table, `--explain` and warning output below are in English; [README.ko.md](README.ko.md) shows the same screens in Korean.
 
 **Scenario 1 - Paste into a PR**
 
@@ -272,13 +288,13 @@ orchestrator -> writer as_tool ask_writer
 
 Installation: to use it as a library, add it to your project with `uv add git+https://github.com/LeeGyeongPil/handoffmap` (or `pip install git+https://github.com/LeeGyeongPil/handoffmap`). `uv tool install` is an isolated environment, so `import handoffmap` does not work there. The sample path in the example above (`src/handoffmap/samples/...`) is correct only when run from the root of a cloned repository.
 
-Public names: `load`, `parse`, `analyze`, `render_mermaid`, `render_table`, `render_markdown`, `to_dict`, the exception `HandoffmapError` (`NotOtlpError`, `NoAgentSpansError`) and the data types (`Trace`, `Flow`, `Edge`, etc.). The same code is in [`examples/api_demo.py`](examples/api_demo.py) (run `uv run python examples/api_demo.py` from the repository root).
+Public names: `load`, `parse`, `analyze`, `render_mermaid`, `render_table`, `render_markdown`, `render_explain`, `to_dict`, the exception `HandoffmapError` (`NotOtlpError`, `NoAgentSpansError`) and the data types (`Trace`, `Flow`, `Edge`, etc.). The same code is in [`examples/api_demo.py`](examples/api_demo.py) (run `uv run python examples/api_demo.py` from the repository root).
 
 Message contents (prompt and response bodies such as `gen_ai.input.messages`) are never included in any output format.
 
 ## Configuration
 
-There are no configuration files, environment variables or API keys. The tool only reads files and does not use the network. The only things you can adjust are the options above (`--max-parallel`, `--repeat-threshold`).
+There are no configuration files or API keys. The tool only reads files and does not use the network. The only things you can adjust are the options above (`--max-parallel`, `--repeat-threshold`, `--lang`) and one optional environment variable, `HANDOFFMAP_LANG` (`en` or `ko`), which sets the output language when `--lang` is not given (see "Output language").
 
 ## How it decides
 
@@ -355,14 +371,14 @@ The sample sources and the versions used to make them are in [`src/handoffmap/sa
 - If a file with several traces is output with `--format table`/`mermaid`, they are printed one after another without a trace-separating header. Use the `md` format, or pick one with `--trace`.
 - The in-memory exporter in `examples/save_otlp_json.py` keeps accumulating spans, so it is not suited to long-running apps.
 - With very large traces (thousands of spans), the diagram gets long. You can shorten it with `--no-tools`.
-- Plans: a single-HTML lane diagram with no external resources, coding-agent CLI trace support, a model price table (v0.2) / a local OTLP receiver and file exporter (v0.3). No schedule is set.
+- Plans: a single-HTML lane diagram with no external resources, coding-agent CLI trace support, a model price table and a local OTLP receiver and file exporter. No schedule is set.
 
 ## Common problems
 
 | Symptom | Cause | Fix |
 |---|---|---|
 | `not an OTLP trace` (exit code 2) | Not an OTLP JSON that has `resourceSpans` | Use the Collector `file` exporter output or a file saved with `examples/save_otlp_json.py` |
-| `no agent spans` (exit code 1) | The trace has no agent spans, or the convention attributes are missing | Check the detection result with `--explain`, and check that the instrumentation emits `gen_ai.operation.name` or `openinference.span.kind` |
+| `no agent spans found` (exit code 1) | The trace has no agent spans, or the convention attributes are missing | Check the detection result with `--explain`, and check that the instrumentation emits `gen_ai.operation.name` or `openinference.span.kind` |
 | The token cells are `–` | The LLM spans have no token attributes | Check whether the instrumentation emits tokens (the `openinference` sample is this case) |
 | An agent name does not show | Unnamed wrapper spans are not counted | Check "ignored wrappers" in `--explain` |
 | `file not found` | A path error | Check the path |
@@ -375,7 +391,7 @@ uv sync
 uv run pytest -q
 ```
 
-72 tests run with no keys or network, using only the built-in samples and synthetic fixtures (`tests/fixtures/README.md` distinguishes measured from synthetic). Please leave bugs and suggestions as issues. The change log is [CHANGELOG.md](CHANGELOG.md).
+107 tests run with no keys or network, using only the built-in samples and synthetic fixtures (`tests/fixtures/README.md` distinguishes measured from synthetic). Please leave bugs and suggestions as issues. The change log is [CHANGELOG.md](CHANGELOG.md).
 
 ## Learn more
 

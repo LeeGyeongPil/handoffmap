@@ -38,11 +38,11 @@ uv tool install git+https://github.com/LeeGyeongPil/handoffmap
 내장 샘플로 바로 실행합니다(파일·키·네트워크 필요 없음).
 
 ```bash
-handoffmap --sample pydantic-ai
+handoffmap --sample pydantic-ai --lang ko
 ```
 
 ````text
-## Agent flow: trace 4dc50229 (otel-genai, 11 spans)
+## 에이전트 흐름: 트레이스 4dc50229 (otel-genai, 스팬 11개)
 
 ```mermaid
 sequenceDiagram
@@ -58,18 +58,18 @@ sequenceDiagram
     end
 ```
 
-### Agents
+### 에이전트
 
-| agent | runs | LLM calls | tools | input tokens | output tokens | time |
+| 에이전트 | 실행 | LLM 호출 | 도구 | 입력 토큰 | 출력 토큰 | 시간 |
 |---|---:|---:|---:|---:|---:|---:|
 | orchestrator | 1 | 2 | 2 | 106 | 21 | 67.8 ms |
 | researcher | 1 | 2 | 1 | 105 | 11 | 55.0 ms |
 | writer | 1 | 1 | 0 | 51 | 1 | 1.5 ms |
-| **total** | 3 | 5 | 3 | 262 | 33 | 124.3 ms |
+| **합계** | 3 | 5 | 3 | 262 | 33 | 124.3 ms |
 
-_Tokens are summed from LLM spans only. `time` is the wall time of each run, including work it delegated. `–` means the trace does not contain the value._
+_토큰은 LLM 스팬에서만 합산합니다. `시간` 은 각 실행의 벽시계 시간이며 위임한 작업을 포함합니다. `–` 는 트레이스에 해당 값이 없다는 뜻입니다._
 
-_Sample trace: recorded from practice (mock) models, so token counts and timings are made up._
+_샘플 트레이스: 연습용(목) 모델로 기록한 것이므로 토큰 수와 시간은 임의의 값입니다._
 ````
 
 위 출력에서 ` ```mermaid ` 블록을 GitHub 같은 곳에 붙이면 그림으로 그려집니다. 이 줄을 읽는 법은 아래 "읽는 법"에 있습니다.
@@ -152,17 +152,17 @@ Agent workflow
 
 | 열 | 뜻 |
 |---|---|
-| runs | 그 에이전트가 실행된 횟수(같은 이름이라도 실행마다 따로 셉니다) |
-| LLM calls | 그 에이전트 아래 LLM span 수 |
-| tools | 일반 도구 호출 수(handoff 표지 도구는 제외) |
-| input / output tokens | LLM span에서만 합산한 토큰. 추적에 값이 없으면 `–` |
-| time | 그 실행의 벽시계 시간(위임한 작업 포함) |
+| 실행 (runs) | 그 에이전트가 실행된 횟수(같은 이름이라도 실행마다 따로 셉니다) |
+| LLM 호출 (LLM calls) | 그 에이전트 아래 LLM span 수 |
+| 도구 (tools) | 일반 도구 호출 수(handoff 표지 도구는 제외) |
+| 입력 / 출력 토큰 (input / output tokens) | LLM span에서만 합산한 토큰. 추적에 값이 없으면 `–` |
+| 시간 (time) | 그 실행의 벽시계 시간(위임한 작업 포함) |
 
 ```bash
-handoffmap --sample pydantic-ai --format table
+HANDOFFMAP_LANG=ko handoffmap --sample pydantic-ai --format table
 ```
 
-![에이전트별 LLM 호출·도구·토큰·시간 표](docs/images/03-table.png)
+![에이전트별 LLM 호출·도구·토큰·시간 표](docs/images/03-table.ko.png)
 *합계 줄: 입력 262, 출력 33 토큰.*
 
 ## 사용법
@@ -170,6 +170,7 @@ handoffmap --sample pydantic-ai --format table
 ```text
 handoffmap [FILE | --sample NAME] [--format md|mermaid|table|json] [--explain]
            [--trace TRACE_ID] [--max-parallel N] [--repeat-threshold N] [--no-tools] [-o OUT]
+           [--lang en|ko]
 ```
 
 | 옵션 | 하는 일 | 예 |
@@ -183,14 +184,31 @@ handoffmap [FILE | --sample NAME] [--format md|mermaid|table|json] [--explain]
 | `--repeat-threshold N` | 같은 위임이 N회면 `repeated-delegation` 경고(기본 3) | `--repeat-threshold 2` |
 | `--no-tools` | 일반 도구 호출 줄을 숨김 | `--no-tools` |
 | `-o`, `--output OUT` | 파일로 저장 | `-o flow.md` |
+| `--lang LANG` | 출력 언어: `en` 또는 `ko`. 도움말·오류·md·표·`--explain` 문구에 적용("출력 언어" 참고) | `--lang ko` |
 | `--version` | 버전 표시 | |
 
 종료 코드: `0` 정상 / `1` 에이전트 span 없음 / `2` 입력 오류(OTLP가 아니거나 파일 없음).
 
 ```text
-$ handoffmap not-otlp.json
-handoffmap: not an OTLP trace: expected a JSON object with a 'resourceSpans' list      (종료 코드 2)
+$ handoffmap not-otlp.json --lang ko
+handoffmap: OTLP 트레이스가 아닙니다: 'resourceSpans' 목록을 가진 JSON 객체가 필요합니다
+$ echo $?
+2
 ```
+
+**출력 언어**
+
+도움말, 오류 메시지, `md`·`table`·`--explain` 문구는 영어와 한국어로 나옵니다. 언어는 아래 순서로 정하고 먼저 설정된 것이 이깁니다: `--lang en|ko` > 환경 변수 `HANDOFFMAP_LANG` > `LC_ALL` > `LC_MESSAGES` > `LANG`. 값이 `ko`로 시작하면(예: `ko_KR.UTF-8`) 한국어이고, 그 밖의 값이거나 아무것도 없으면 영어입니다.
+
+```bash
+handoffmap --sample pydantic-ai --lang ko        # 이번 한 번만 한국어
+HANDOFFMAP_LANG=ko handoffmap --help             # 도움말을 한국어로
+LANG=fr_FR.UTF-8 handoffmap --help               # 한국어가 아니므로 영어
+```
+
+기계가 읽는 출력은 언어와 무관하게 같습니다. `--format json`과 `--format mermaid`는 `en`과 `ko`에서 바이트 단위로 같고(JSON의 경고 `message`는 영어 그대로), 종료 코드도 같습니다. 파이썬 API(`render_markdown`, `render_table`, `render_explain`)는 기본이 `lang="en"`이고 환경 변수를 읽지 않습니다. 한국어 문구가 필요하면 `lang="ko"`를 넘기세요.
+
+이 문서의 표·`--explain`·경고 스크린샷은 `HANDOFFMAP_LANG=ko`로 찍은 한국어 화면입니다. 영어 화면은 [README.md](README.md)에 있습니다.
 
 **시나리오 1 - PR에 붙이기**
 
@@ -202,39 +220,39 @@ handoffmap run.json > flow.md
 **시나리오 2 - 근거 확인**
 
 ```bash
-handoffmap --sample openinference --explain
+handoffmap --sample openinference --explain --lang ko
 ```
 
 ```text
-trace: c9c642518c7203aee90e7f8c52f974ad
-convention: openinference
-size: 17 spans, 3 agent runs, 3 agents
-agents: triage, billing, summarizer
-edges:
-  (none) -> triage: root  [no agent above it and no handoff source: it started the run]
-  triage -> billing: handoff  [no agent ancestor; the span is a sibling and names its predecessor (graph.node.parent_id)]
-  billing -> summarizer: as_tool via summarize  [a tool span sits between the caller and this agent (agent used as a tool)]
-ignored wrappers (AGENT span without agent.name, not counted as agents): 'Agent workflow' x1
-tokens: none of the LLM spans carry token counts
+트레이스: c9c642518c7203aee90e7f8c52f974ad
+규약: openinference
+규모: 스팬 17개, 에이전트 실행 3회, 에이전트 3개
+에이전트: triage, billing, summarizer
+엣지:
+  (없음) -> triage: root  [위에 에이전트가 없고 핸드오프 출처도 없습니다. 실행을 시작한 에이전트입니다]
+  triage -> billing: handoff  [상위 에이전트가 없고, 스팬이 형제 관계이며 이전 에이전트를 명시합니다(graph.node.parent_id)]
+  billing -> summarizer: as_tool 경유 summarize  [호출자와 이 에이전트 사이에 도구 스팬이 있습니다(에이전트를 도구로 사용)]
+무시한 래퍼(agent.name 이 없는 AGENT 스팬, 에이전트로 세지 않음): 'Agent workflow' x1
+토큰: 토큰 수를 가진 LLM 스팬이 없습니다
 ```
 (이 뒤에 일반 보고서가 이어집니다.) 감지한 규약, 에이전트로 인정한 span 수, 무시한 래퍼가 보입니다. 이 샘플은 토큰 값이 비어 있어서 표의 토큰 칸이 `–`입니다.
 
-![--explain 출력](docs/images/04-explain.png)
+![--explain 출력](docs/images/04-explain.ko.png)
 *`--explain` 출력의 앞부분.*
 
 **시나리오 3 - 반복 위임 경고**
 
 ```bash
-handoffmap tests/fixtures/synthetic_loop.otlp.json
+handoffmap tests/fixtures/synthetic_loop.otlp.json --lang ko
 ```
 
-![planner가 coder에게 같은 위임을 3번 하고 repeated-delegation 경고가 뜬 출력](docs/images/05-loop-warning.png)
+![planner가 coder에게 같은 위임을 3번 하고 repeated-delegation 경고가 뜬 출력](docs/images/05-loop-warning.ko.png)
 *손으로 만든 합성 추적(실측 아님)입니다. 같은 위임이 3번 반복되어 경고가 붙었고, coder의 runs는 3입니다.*
 
 ```text
-### Warnings
+### 경고
 
-- **repeated-delegation**: planner -> coder happened 3 times (threshold 3); check for a loop or a missing stop condition
+- **repeated-delegation**: planner -> coder 가 3번 발생했습니다(기준 3번). 반복 루프이거나 종료 조건이 빠져 있지 않은지 확인하십시오
 ```
 
 **시나리오 4 - CI에서 토큰 확인**
@@ -268,15 +286,17 @@ orchestrator -> writer as_tool ask_writer
 | **total** | 3 | 5 | 3 | 262 | 33 | 124.3 ms |
 ```
 
+파이썬 API는 기본이 영어(`lang="en"`)라 위 표도 영어로 나옵니다. 한국어 표는 `handoffmap.render_table(flow, lang="ko")`로 얻습니다.
+
 설치: 라이브러리로 쓰려면 프로젝트에 `uv add git+https://github.com/LeeGyeongPil/handoffmap`(또는 `pip install git+https://github.com/LeeGyeongPil/handoffmap`)로 넣으세요. `uv tool install`은 격리 환경이라 거기서는 `import handoffmap`이 되지 않습니다. 위 예제의 샘플 경로(`src/handoffmap/samples/...`)는 레포를 clone한 루트에서 실행할 때만 맞습니다.
 
-공개 이름: `load`, `parse`, `analyze`, `render_mermaid`, `render_table`, `render_markdown`, `to_dict`, 예외 `HandoffmapError`(`NotOtlpError`, `NoAgentSpansError`)와 데이터 타입들(`Trace`, `Flow`, `Edge` 등). 같은 코드가 [`examples/api_demo.py`](examples/api_demo.py)에 있습니다(레포 루트에서 `uv run python examples/api_demo.py`).
+공개 이름: `load`, `parse`, `analyze`, `render_mermaid`, `render_table`, `render_markdown`, `render_explain`, `to_dict`, 예외 `HandoffmapError`(`NotOtlpError`, `NoAgentSpansError`)와 데이터 타입들(`Trace`, `Flow`, `Edge` 등). 같은 코드가 [`examples/api_demo.py`](examples/api_demo.py)에 있습니다(레포 루트에서 `uv run python examples/api_demo.py`).
 
 메시지 내용(`gen_ai.input.messages` 등 프롬프트·응답 본문)은 어떤 출력 형식에도 넣지 않습니다.
 
 ## 설정
 
-설정 파일·환경변수·API 키는 없습니다. 도구는 파일만 읽고 네트워크를 쓰지 않습니다. 조절할 수 있는 것은 위 옵션(`--max-parallel`, `--repeat-threshold`)뿐입니다.
+설정 파일·API 키는 없습니다. 도구는 파일만 읽고 네트워크를 쓰지 않습니다. 조절할 수 있는 것은 위 옵션(`--max-parallel`, `--repeat-threshold`, `--lang`)과 선택 환경 변수 `HANDOFFMAP_LANG`(`en` 또는 `ko`)뿐입니다. `--lang`을 주지 않았을 때 출력 언어를 정합니다("출력 언어" 참고).
 
 ## 어떻게 판정하나
 
@@ -349,21 +369,21 @@ uv run examples/make_openai_agents_trace.py trace.json
 - OpenInference의 handoff 판정은 `graph.node.parent_id`에 기대므로, 다른 계측에서는 `root`로 보일 수 있습니다(`--explain`으로 근거 확인).
 - Mermaid 출력은 문법 구조(참가자 별칭, `par`/`end` 균형, 특수문자 이스케이프)를 테스트로 확인했고, 내장 샘플 출력은 mermaid 11 파서(11.17.2)로 문법 검증을 마쳤습니다. 실제 그림 렌더링은 GitHub에서 한 번 확인해 보세요.
 - 아주 깊은 중첩(에이전트 약 500단 이상)은 `md`/`mermaid` 그리기에서 재귀 한도(`RecursionError`)로 실패합니다. 이때는 `--format table` 또는 `json`을 쓰세요.
-- `total` 행의 time은 각 실행 시간을 단순 합산하므로, 위임한 하위 작업 시간이 겹쳐 실제 벽시계보다 클 수 있습니다(토큰·호출 수 합계에는 영향 없음). JSON의 `totals.duration_ms`도 같습니다.
+- `합계` 행의 시간은 각 실행 시간을 단순 합산하므로, 위임한 하위 작업 시간이 겹쳐 실제 벽시계보다 클 수 있습니다(토큰·호출 수 합계에는 영향 없음). JSON의 `totals.duration_ms`도 같습니다.
 - 여러 trace가 든 파일을 `--format table`/`mermaid`로 내면 trace 구분 머리말 없이 이어서 출력됩니다. `md` 형식을 쓰거나 `--trace`로 하나를 고르세요.
 - `examples/save_otlp_json.py`의 메모리 익스포터는 span을 계속 쌓으므로 장시간 실행하는 앱에는 맞지 않습니다.
 - 매우 큰 추적(수천 span)에서는 그림이 길어집니다. `--no-tools`로 줄일 수 있습니다.
-- 계획: 외부 자원 없는 단일 HTML 레인 그림, 코딩 에이전트 CLI 추적 지원, 모델 단가표(v0.2) / 로컬 OTLP 수신기와 파일 익스포터(v0.3). 일정은 정해져 있지 않습니다.
+- 계획: 외부 자원 없는 단일 HTML 레인 그림, 코딩 에이전트 CLI 추적 지원, 모델 단가표, 로컬 OTLP 수신기와 파일 익스포터. 일정은 정해져 있지 않습니다.
 
 ## 자주 겪는 문제
 
 | 증상 | 원인 | 해결 |
 |---|---|---|
-| `not an OTLP trace` (종료 코드 2) | `resourceSpans`가 있는 OTLP JSON이 아님 | Collector `file` 익스포터 결과나 `examples/save_otlp_json.py`로 저장한 파일을 쓰세요 |
-| `no agent spans` (종료 코드 1) | 추적에 에이전트 span이 없거나 규약 속성이 빠짐 | `--explain`으로 감지 결과 확인, 계측에서 `gen_ai.operation.name` 또는 `openinference.span.kind`가 나가는지 확인 |
+| `not an OTLP trace` / `OTLP 트레이스가 아닙니다` (종료 코드 2) | `resourceSpans`가 있는 OTLP JSON이 아님 | Collector `file` 익스포터 결과나 `examples/save_otlp_json.py`로 저장한 파일을 쓰세요 |
+| `no agent spans found` / `에이전트 스팬을 찾지 못했습니다` (종료 코드 1) | 추적에 에이전트 span이 없거나 규약 속성이 빠짐 | `--explain`으로 감지 결과 확인, 계측에서 `gen_ai.operation.name` 또는 `openinference.span.kind`가 나가는지 확인 |
 | 토큰 칸이 `–` | LLM span에 토큰 속성이 없음 | 계측이 토큰을 내보내는지 확인(샘플 `openinference`가 이 경우) |
-| 에이전트 이름이 안 보임 | 이름 없는 래퍼 span은 세지 않음 | `--explain`의 "ignored wrappers" 확인 |
-| `file not found` | 경로 오류 | 경로를 확인하세요 |
+| 에이전트 이름이 안 보임 | 이름 없는 래퍼 span은 세지 않음 | `--explain`의 "무시한 래퍼"(영어 화면은 "ignored wrappers") 확인 |
+| `file not found` / `파일을 찾을 수 없습니다` | 경로 오류 | 경로를 확인하세요 |
 
 ## 개발·테스트
 
@@ -373,7 +393,7 @@ uv sync
 uv run pytest -q
 ```
 
-테스트 72개가 키·네트워크 없이 내장 샘플과 합성 픽스처만으로 돕니다(`tests/fixtures/README.md`에 실측/합성 구분이 있습니다). 버그·제안은 이슈로 남겨 주세요. 변경 기록은 [CHANGELOG.md](CHANGELOG.md).
+테스트 107개가 키·네트워크 없이 내장 샘플과 합성 픽스처만으로 돕니다(`tests/fixtures/README.md`에 실측/합성 구분이 있습니다). 버그·제안은 이슈로 남겨 주세요. 변경 기록은 [CHANGELOG.md](CHANGELOG.md).
 
 ## 더 알아보기
 
