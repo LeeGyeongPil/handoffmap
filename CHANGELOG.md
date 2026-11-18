@@ -3,7 +3,10 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.2.1] - 2026-11-18
+
+### Fixed
+- Structurally malformed OTLP input (non-object `resourceSpans`/`scopeSpans`/span items, non-list `spans`, null `arrayValue`) no longer ends in a traceback with exit code 1; structure errors report `not an OTLP trace` with exit code 2 and null array values decode as empty. A missing or empty `scopeSpans` still falls back to `instrumentationLibrarySpans` as before, but a `scopeSpans` or `instrumentationLibrarySpans` value that is present and not a list (`null` included) is now rejected with exit code 2.
 
 ## [0.2.0] - 2026-11-12
 
