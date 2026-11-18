@@ -3,6 +3,11 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [0.2.2] - 2026-11-18
+
+### Fixed
+- OTLP JSON and JSONL files that start with a UTF-8 byte order mark (as saved by some Windows tools) are now parsed instead of being rejected as invalid JSON; a BOM anywhere else is still an error.
+
 ## [0.2.1] - 2026-11-18
 
 ### Fixed

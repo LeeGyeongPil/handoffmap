@@ -393,7 +393,7 @@ uv sync
 uv run pytest -q
 ```
 
-테스트 147개가 키·네트워크 없이 내장 샘플과 합성 픽스처만으로 돕니다(`tests/fixtures/README.md`에 실측/합성 구분이 있습니다). 버그·제안은 이슈로 남겨 주세요. 변경 기록은 [CHANGELOG.md](CHANGELOG.md).
+테스트 150개가 키·네트워크 없이 내장 샘플과 합성 픽스처만으로 돕니다(`tests/fixtures/README.md`에 실측/합성 구분이 있습니다). 버그·제안은 이슈로 남겨 주세요. 변경 기록은 [CHANGELOG.md](CHANGELOG.md).
 
 ## 더 알아보기
 

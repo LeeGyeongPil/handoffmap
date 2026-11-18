@@ -391,7 +391,7 @@ uv sync
 uv run pytest -q
 ```
 
-147 tests run with no keys or network, using only the built-in samples and synthetic fixtures (`tests/fixtures/README.md` distinguishes measured from synthetic). Please leave bugs and suggestions as issues. The change log is [CHANGELOG.md](CHANGELOG.md).
+150 tests run with no keys or network, using only the built-in samples and synthetic fixtures (`tests/fixtures/README.md` distinguishes measured from synthetic). Please leave bugs and suggestions as issues. The change log is [CHANGELOG.md](CHANGELOG.md).
 
 ## Learn more
 
