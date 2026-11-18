@@ -67,9 +67,12 @@ def _decode_value(value: Any) -> Any:
     if "boolValue" in value:
         return value["boolValue"]
     if "arrayValue" in value:
-        return [_decode_value(v) for v in value["arrayValue"].get("values", [])]
+        array = value["arrayValue"]
+        values = array.get("values") if isinstance(array, dict) else None
+        return [_decode_value(v) for v in values] if isinstance(values, list) else []
     if "kvlistValue" in value:
-        return _decode_attrs(value["kvlistValue"].get("values", []))
+        kvlist = value["kvlistValue"]
+        return _decode_attrs(kvlist.get("values") if isinstance(kvlist, dict) else None)
     if "bytesValue" in value:
         return value["bytesValue"]
     return None
@@ -77,7 +80,7 @@ def _decode_value(value: Any) -> Any:
 
 def _decode_attrs(items: Any) -> dict[str, Any]:
     out: dict[str, Any] = {}
-    for item in items or []:
+    for item in items if isinstance(items, list) else []:
         if isinstance(item, dict) and "key" in item:
             out[item["key"]] = _decode_value(item.get("value"))
     return out
@@ -101,16 +104,53 @@ def _int(raw: Any) -> int:
         return 0
 
 
+def _scope_list(resource_spans: dict[str, Any]) -> tuple[str, list[Any]]:
+    """Pick the scope list of one resource: ``scopeSpans``, else the older ``instrumentationLibrarySpans``.
+
+    Same choice as before: a missing key or an empty list falls through to the
+    older name, so spans under ``instrumentationLibrarySpans`` are never dropped.
+    Only a value that is present but not a list (``null`` included) is an error.
+    """
+    for key in ("scopeSpans", "instrumentationLibrarySpans"):
+        if key not in resource_spans:
+            continue  # missing -> try the next name
+        value = resource_spans[key]
+        if not isinstance(value, list):
+            raise NotOtlpError("err.not_a_list", name=key)  # null, object, number -> structure error
+        if value:
+            return key, value  # the first non-empty list wins; the other name is not read
+        # empty list -> keep going: the spans may sit under instrumentationLibrarySpans
+    return "scopeSpans", []
+
+
+def _scope_info(scope_spans: dict[str, Any]) -> dict[str, Any]:
+    """``scope`` (new) or ``instrumentationLibrary`` (old); the first non-empty object wins."""
+    for key in ("scope", "instrumentationLibrary"):
+        value = scope_spans.get(key)
+        if isinstance(value, dict) and value:
+            return value
+    return {}  # the scope name is only a label, so an odd shape is ignored rather than rejected
+
+
 def _spans_of_request(request: Any) -> list[Span]:
     if not isinstance(request, dict) or not isinstance(request.get("resourceSpans"), list):
         raise NotOtlpError("err.no_resource_spans")
     spans: list[Span] = []
     for resource_spans in request["resourceSpans"]:
+        if not isinstance(resource_spans, dict):
+            raise NotOtlpError("err.resource_item_not_object")
         # older exporters use instrumentationLibrarySpans instead of scopeSpans
-        scope_list = resource_spans.get("scopeSpans") or resource_spans.get("instrumentationLibrarySpans") or []
+        scope_key, scope_list = _scope_list(resource_spans)
         for scope_spans in scope_list:
-            scope = scope_spans.get("scope") or scope_spans.get("instrumentationLibrary") or {}
-            for raw in scope_spans.get("spans", []):
+            if not isinstance(scope_spans, dict):
+                raise NotOtlpError("err.scope_item_not_object", name=scope_key)
+            scope = _scope_info(scope_spans)
+            span_list = scope_spans.get("spans", [])
+            if not isinstance(span_list, list):
+                raise NotOtlpError("err.not_a_list", name="spans")
+            for raw in span_list:
+                if not isinstance(raw, dict):
+                    raise NotOtlpError("err.span_not_object")
                 trace_id = normalize_id(raw.get("traceId"))
                 span_id = normalize_id(raw.get("spanId"))
                 if trace_id is None or span_id is None:
