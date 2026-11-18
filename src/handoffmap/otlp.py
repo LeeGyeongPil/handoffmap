@@ -174,6 +174,7 @@ def _spans_of_request(request: Any) -> list[Span]:
 def parse(text: str) -> list[Trace]:
     """Parse OTLP JSON (one request) or JSONL (one request per line) text."""
     requests: list[Any]
+    text = text.removeprefix("﻿")  # files saved by Windows tools start with a UTF-8 BOM
     try:
         requests = [json.loads(text)]
     except json.JSONDecodeError as whole_error:

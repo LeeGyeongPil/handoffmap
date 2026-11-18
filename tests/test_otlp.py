@@ -46,6 +46,29 @@ def test_jsonl_splits_traces(tmp_path):
     assert len({t.trace_id for t in traces}) == 2
 
 
+def test_leading_bom_json_matches_plain_file(tmp_path):
+    raw = sample_path("pydantic-ai").read_bytes()
+    plain = tmp_path / "plain.json"
+    plain.write_bytes(raw)
+    bom = tmp_path / "bom.json"
+    bom.write_bytes(b"\xef\xbb\xbf" + raw)
+    assert handoffmap.load(bom) == handoffmap.load(plain)
+    assert parse("﻿" + raw.decode("utf-8")) == handoffmap.load(plain)
+
+
+def test_leading_bom_jsonl_is_parsed(tmp_path):
+    line = json.dumps(json.loads(sample_path("pydantic-ai").read_text(encoding="utf-8")))
+    path = tmp_path / "bom.jsonl"
+    path.write_bytes(b"\xef\xbb\xbf" + (line + "\n" + line + "\n").encode("utf-8"))
+    (trace,) = handoffmap.load(path)
+    assert trace.trace_id
+
+
+def test_bom_in_the_middle_is_still_invalid_json():
+    with pytest.raises(NotOtlpError, match="JSON"):
+        parse('{"resourceSpans": ﻿[]}')
+
+
 def test_same_trace_across_requests_is_merged():
     text = sample_path("pydantic-ai").read_text(encoding="utf-8")
     import json
