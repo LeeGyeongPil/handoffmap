@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import copy
+import json
 import re
 
 import pytest
@@ -80,3 +82,210 @@ def test_not_otlp_inputs_raise(text):
 def test_missing_file_is_input_error(tmp_path):
     with pytest.raises(NotOtlpError, match="file not found"):
         handoffmap.load(tmp_path / "nope.json")
+
+
+_GOOD_SPAN = {"traceId": "0" * 31 + "1", "spanId": "0" * 15 + "1", "name": "x"}
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"resourceSpans": [1]},
+        {"resourceSpans": [{"scopeSpans": [1]}]},
+        {"resourceSpans": [{"scopeSpans": [{"spans": [1]}]}]},
+        {"resourceSpans": [{"scopeSpans": [{"spans": None}]}]},
+        {"resourceSpans": [{"scopeSpans": None}]},
+        {"resourceSpans": [{"scopeSpans": {"spans": []}}]},
+    ],
+)
+def test_malformed_structure_is_not_otlp(payload, tmp_path, capsys):
+    import json
+
+    from handoffmap.cli import main
+
+    with pytest.raises(NotOtlpError):
+        parse(json.dumps(payload))
+    path = tmp_path / "bad.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    assert main([str(path)]) == 2
+    assert "not an OTLP trace" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"resourceSpans": []},
+        {"resourceSpans": [{}]},
+        {"resourceSpans": [{"scopeSpans": []}]},
+        {"resourceSpans": [{"instrumentationLibrarySpans": []}]},
+        {"resourceSpans": [{"scopeSpans": [{}]}]},
+        {"resourceSpans": [{"scopeSpans": [{"spans": []}]}]},
+        {"resourceSpans": [{"scopeSpans": [], "instrumentationLibrarySpans": []}]},
+    ],
+)
+def test_empty_or_missing_lists_stay_valid(payload):
+    import json
+
+    from handoffmap.otlp import _spans_of_request
+
+    # structurally valid (no NotOtlpError about structure), just no spans
+    assert _spans_of_request(payload) == []
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"resourceSpans": [1]},
+        {"resourceSpans": [{"scopeSpans": [1]}]},
+        {"resourceSpans": [{"instrumentationLibrarySpans": [1]}]},
+        {"resourceSpans": [{"scopeSpans": [{"spans": [1]}]}]},
+        {"resourceSpans": [{"scopeSpans": [{"spans": None}]}]},
+        {"resourceSpans": [{"scopeSpans": None}]},
+    ],
+)
+def test_korean_structure_errors_have_no_english_fragments(payload):
+    import json
+
+    with pytest.raises(NotOtlpError) as info:
+        parse(json.dumps(payload))
+    ko = info.value.localized("ko")
+    assert ko.startswith("OTLP 트레이스가 아닙니다")
+    for word in ("must be", "an object", "a list", "item"):
+        assert word not in ko
+
+
+def test_null_array_value_does_not_raise():
+    import json
+
+    span = dict(_GOOD_SPAN)
+    span["attributes"] = [
+        {"key": "a", "value": {"arrayValue": None}},
+        {"key": "k", "value": {"kvlistValue": None}},
+        {"key": "ok", "value": {"stringValue": "v"}},
+    ]
+    payload = {"resourceSpans": [{"scopeSpans": [{"spans": [span]}]}]}
+    (trace,) = parse(json.dumps(payload))
+    attrs = trace.spans[0].attributes
+    assert attrs == {"a": [], "k": {}, "ok": "v"}
+
+
+# --- scopeSpans / instrumentationLibrarySpans choice (Q-3) -------------------
+
+_AGENT_SPAN = {
+    "traceId": "0" * 31 + "1",
+    "spanId": "0" * 15 + "1",
+    "name": "invoke_agent a",
+    "attributes": [
+        {"key": "gen_ai.operation.name", "value": {"stringValue": "invoke_agent"}},
+        {"key": "gen_ai.agent.name", "value": {"stringValue": "a"}},
+    ],
+}
+_ID_A = "0" * 15 + "1"
+_ID_B = "0" * 15 + "2"
+
+
+def _agent(span_id: str) -> dict:
+    span = copy.deepcopy(_AGENT_SPAN)
+    span["spanId"] = span_id
+    return span
+
+
+def _old_rule_span_ids(payload: dict) -> list[str]:
+    """The 0.2.0 choice, kept as an oracle: scopeSpans if truthy, else instrumentationLibrarySpans."""
+    ids = []
+    for resource in payload["resourceSpans"]:
+        for scope_spans in resource.get("scopeSpans") or resource.get("instrumentationLibrarySpans") or []:
+            ids += [raw["spanId"] for raw in scope_spans.get("spans", [])]
+    return ids
+
+
+@pytest.mark.parametrize(
+    "resources, expected",
+    [
+        # Q-3: an empty scopeSpans list must not hide spans kept under the older name
+        ([{"scopeSpans": [], "instrumentationLibrarySpans": [{"spans": [_agent(_ID_A)]}]}], [_ID_A]),
+        # ...also when another resource is fine (spans were silently dropped there)
+        (
+            [
+                {"scopeSpans": [{"spans": [_agent(_ID_A)]}]},
+                {"scopeSpans": [], "instrumentationLibrarySpans": [{"spans": [_agent(_ID_B)]}]},
+            ],
+            [_ID_A, _ID_B],
+        ),
+        ([{"instrumentationLibrarySpans": [{"spans": [_agent(_ID_A)]}]}], [_ID_A]),
+        ([{"scopeSpans": [{"spans": [_agent(_ID_A)]}]}], [_ID_A]),
+        ([{"scopeSpans": [{"spans": [_agent(_ID_A)]}]}, {"scopeSpans": []}], [_ID_A]),
+        # a non-empty scopeSpans wins; the older name is not read at all (as in 0.2.0)
+        (
+            [{"scopeSpans": [{"spans": [_agent(_ID_A)]}], "instrumentationLibrarySpans": [{"spans": [_agent(_ID_B)]}]}],
+            [_ID_A],
+        ),
+        ([{"scopeSpans": [{"spans": [_agent(_ID_A)]}], "instrumentationLibrarySpans": None}], [_ID_A]),
+    ],
+)
+def test_scope_list_choice_matches_previous_release(resources, expected):
+    payload = {"resourceSpans": resources}
+    (trace,) = parse(json.dumps(payload))
+    got = [s.span_id for s in trace.spans]
+    assert got == expected
+    assert got == _old_rule_span_ids(payload)  # same spans as the 0.2.0 loader picked
+
+
+def test_empty_scope_spans_fallback_through_cli(tmp_path, capsys):
+    from handoffmap.cli import main
+
+    payload = {"resourceSpans": [{"scopeSpans": [], "instrumentationLibrarySpans": [{"spans": [_agent(_ID_A)]}]}]}
+    path = tmp_path / "old.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    assert main(["--format", "json", str(path)]) == 0  # not exit 2 "no spans found"
+    data = json.loads(capsys.readouterr().out)
+    assert [a["name"] for a in data["agents"]] == ["a"]
+
+
+@pytest.mark.parametrize(
+    "resource, key",
+    [
+        # once the older name is used, it gets the same structure checks as scopeSpans
+        ({"scopeSpans": [], "instrumentationLibrarySpans": None}, "instrumentationLibrarySpans"),
+        ({"instrumentationLibrarySpans": None}, "instrumentationLibrarySpans"),
+        ({"scopeSpans": [], "instrumentationLibrarySpans": {"spans": []}}, "instrumentationLibrarySpans"),
+        ({"scopeSpans": [], "instrumentationLibrarySpans": [1]}, "instrumentationLibrarySpans"),
+        # null is "not a list", not "empty" (fix_scope AC-1): reported, never skipped silently
+        ({"scopeSpans": None, "instrumentationLibrarySpans": [{"spans": [_agent(_ID_A)]}]}, "scopeSpans"),
+    ],
+)
+def test_fallback_list_structure_errors(resource, key, tmp_path, capsys):
+    from handoffmap.cli import main
+
+    text = json.dumps({"resourceSpans": [resource]})
+    with pytest.raises(NotOtlpError) as info:
+        parse(text)
+    assert f"'{key}'" in str(info.value)
+    ko = info.value.localized("ko")
+    assert ko.startswith("OTLP 트레이스가 아닙니다") and f"'{key}'" in ko
+    for word in ("must be", "an object", "a list", "item"):
+        assert word not in ko
+    path = tmp_path / "bad.json"
+    path.write_text(text, encoding="utf-8")
+    for lang, prefix in (("en", "handoffmap: not an OTLP trace"), ("ko", "handoffmap: OTLP 트레이스가 아닙니다")):
+        assert main(["--lang", lang, str(path)]) == 2
+        err = capsys.readouterr().err
+        assert err.startswith(prefix) and len(err.strip().splitlines()) == 1
+
+
+@pytest.mark.parametrize(
+    "scope_spans, expected",
+    [
+        ({"scope": {"name": "new"}, "instrumentationLibrary": {"name": "old"}}, "new"),
+        ({"scope": {}, "instrumentationLibrary": {"name": "old"}}, "old"),
+        ({"scope": None, "instrumentationLibrary": {"name": "old"}}, "old"),
+        ({"scope": "x", "instrumentationLibrary": {"name": "old"}}, "old"),
+        ({"instrumentationLibrary": {"name": "old"}}, "old"),
+        ({"scope": "x"}, ""),
+        ({}, ""),
+    ],
+)
+def test_scope_name_falls_back_to_instrumentation_library(scope_spans, expected):
+    block = dict(scope_spans, spans=[_agent(_ID_A)])
+    (trace,) = parse(json.dumps({"resourceSpans": [{"scopeSpans": [block]}]}))
+    assert trace.spans[0].scope == expected
